@@ -1,16 +1,23 @@
 #!/usr/bin/python3
 
-
 ########################################################
 #IMPORTS
+from configparser import *
+#import configparser
 from colors import *
 from modules import *
 import os, sys, time, requests, subprocess
 ##########################################################
 #API
-token="7142033592:AAFy8APbSls_2XhjsLXtvvzm5A54TGV9jx4"
-chat_id=-1002043389909
-interval=1
+#token="7142033592:AAFy8APbSls_2XhjsLXtvvzm5A54TGV9jx4"
+#chat_id=-1002043389909
+#interval=1
+conf=".conf"
+config=ConfigParser()
+config.read(conf)
+token=str(config.get('api', 'token'))
+chat_id=int(config.get('api', 'chat_id'))
+interval=int(config.get('api', 'interval'))
 ##########################################################
 #OBJECTS
 msg=[]
@@ -34,10 +41,8 @@ print(reset)
 #############################################################
 #class
 class TG:
-	def __init__(self, token, chat_id, interval):
-                self.token="7142033592:AAFy8APbSls_2XhjsLXtvvzm5A54TGV9jx4"
-                self.chat_id=-1002043389909
-                self.interval=0.5
+	def __init__(self, time):
+                self.time=1
 	def start(err="", fin=""):
 		os.system("clear")
 		print(blink+"\t\t\t┌---------------------|")
