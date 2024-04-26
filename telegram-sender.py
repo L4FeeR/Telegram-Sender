@@ -22,7 +22,7 @@ interval=int(config.get('api', 'interval'))
 #OBJECTS
 msg=[]
 rask=red+"root"+blue+"@"+green+"tgzen"+reset+" ---> "
-
+agb=green+"["+blue+"+"+green+"]"+reset
 ayg=yellow+"["+green+"+"+yellow+"]"+reset
 agr=green+"["+yellow+"+"+green+"]"+reset
 arg=red+"["+green+"+"+red+"]"+reset
@@ -75,7 +75,7 @@ class TG:
 				TG.tglink()
 				TG.start(fin="Returned To Menu From Telegram Links.")
 			elif opt==5:
-				TG.msg()
+				TG.pip_install()
 				TG.start(fin="Returned To Menu From Package Installation Portal.")
 			elif opt==6:
 				TG.info()
@@ -128,8 +128,12 @@ class TG:
 			os.system("echo \""+i+"\""+" >> .l4_hist")
 	def showhist():
 		j=0
+		os.system("clear")
+		print(blue+"\n\n\t\t┌------------|")
+		print("\t\t|"+reset+"   HISTORY "+blue+" |")
+		print(blue+"\t\t└------------|\n\n"+reset)
 		print(subprocess.getoutput("cat .l4_hist"))
-		print("\n\n\n\t Return to main menu in 10 sec")
+		print("\n\n\n\t Return to main menu in 10 sec OR Press CTRL+C or CTRL+D")
 		time.sleep(10)
 	def cmd_user():
 		#msg=[]
@@ -147,16 +151,20 @@ class TG:
 				print(green)
 				for i in smsg:
 					print(str(i).replace("%0A %0A", ""))
-			smgs=[]
 					#print(str(i.replace("0A", ""))+", ", end="")
 		except KeyboardInterrupt:
-			smgs=[]
-			cmdo=[]
+			print
 			print(yellow+"\n\n\t["+green+"CTRL^C"+yellow+"]"+reset+"Message gathering done.")
+			TG.histsave(cmdo)
+			TG.send_msg(smsg)
+			smsg=[]
+			cmdo=[]
 		except EOFError:
 			print(yellow+"\n\n\t["+green+"CTRL^D"+yellow+"]"+reset+"Message gathering done.")
-		TG.histsave(cmdo)
-
+			TG.histsave(cmdo)
+			TG.send_msg(smsg)
+			smsg=[]
+			cmdo=[]
 
 	def send_msg(tmsg):
 		os.system("clear")
@@ -181,7 +189,6 @@ class TG:
 		print("[*]Opening Telegram ON Web...")
 		os.system("xdg-open \"https://t.me/l4testsubject\" &")
 		print("""
-
  ______________________________________
 | IF ABOVE NOT WORKS THEN TRY OPEN THE |
 | LINK BELOW MANUALLY, 10sec waiting.. |
@@ -192,11 +199,17 @@ class TG:
                 ||----w |
                 ||     ||
 
-
+        CTRL+C or CTRL+D works too
 
                         https://t.me/l4testsubject""")
 		time.sleep(10)
 
+	def pip_install():
+		os.system("clear")
+		print(agb+"Installing required Package..."+reset)
+		os.system("pip3 install requests")
+		print(agb+"If internet not connected then it wont install, otherwise enjoy"+reset)
+		time.sleep(2)
 	def exit():
 		loading(ayr+red+"Exiting from the program..."+yellow+"")
 		os.system("clear")
